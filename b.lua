@@ -62,6 +62,21 @@ end, function(hex)
 end
 b.hex = hex
 b.unhex = unhex
+local function clone(t)
+	local function dive(tb)
+		local out = {}
+		for i, v in next, tb do
+			if typeof(v) == 'table' then
+				out[i] = dive(v)
+			else
+				out[i] = v
+			end
+		end
+		return out
+	end
+	return dive(t)
+end
+b.clonetable = clone
 
 -- Deep scan
 b.instances = {}
